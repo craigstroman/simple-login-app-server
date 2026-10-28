@@ -8,11 +8,11 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 export const postLogin = async (req: Request, res: Response) => {
   try {
-    const { emailOrUsername, password } = req.body;
+    const { usernameOrEmail, password } = req.body;
 
     const user = await User.createQueryBuilder('user')
-      .where(emailOrUsername.includes('@') ? 'user.email = :value' : 'user.username = :value', {
-        value: emailOrUsername,
+      .where(usernameOrEmail.includes('@') ? 'user.email = :value' : 'user.username = :value', {
+        value: usernameOrEmail,
       })
       .getOne();
 
