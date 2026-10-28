@@ -5,6 +5,7 @@ import { postLogin } from '../controllers/login/login';
 import { postLogout } from '../controllers/logout/logout';
 import { postForgotPassword } from '../controllers/forgot-password/forgotPassword';
 import { changePassword } from '../controllers/change-password/changePassword';
+import { isLoggedIn } from '../controllers/isLoggedIn/isLoggedIn';
 
 const router = Router();
 
@@ -19,5 +20,7 @@ router.route('/logout').post(postLogout);
 router.route('/forgot-password').post(postForgotPassword);
 
 router.route('/change-password').post(changePassword);
+
+router.route('/is-logged-in').get(isLoggedIn);
 
 export default router;
