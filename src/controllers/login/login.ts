@@ -18,7 +18,7 @@ export const postLogin = async (req: Request, res: Response) => {
 
     if (!user) {
       return res.status(500).json({
-        error: `Username or password is invalid.`,
+        error: 'Username or password is invalid.',
       });
     }
 
@@ -26,7 +26,7 @@ export const postLogin = async (req: Request, res: Response) => {
 
     if (!valid) {
       return res.status(500).json({
-        error: `Username or password doesn't match.`,
+        error: "Username or password doesn't match.",
       });
     }
 
