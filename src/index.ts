@@ -6,6 +6,7 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import { redis, RedisStore } from './config/redis';
 import routes from './routes/index';
+import authRouter from './routes/auth';
 import { User } from './entities/USER';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
@@ -37,16 +38,6 @@ const main = async () => {
   await conn.runMigrations();
 
   app.use(
-    cors({
-      origin:
-        nodeEnv === 'production' ? ['https://simple-login-app.craigstroman.com'] : [`http://localhost:8080`],
-      credentials: true,
-      methods: ['GET', 'POST', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
-    }),
-  );
-
-  app.use(
     session({
       name: 'uid',
       store: new RedisStore({
@@ -55,7 +46,7 @@ const main = async () => {
       }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-        httpOnly: false,
+        httpOnly: true,
         sameSite: 'lax',
         secure: false,
       },
@@ -65,13 +56,30 @@ const main = async () => {
     }),
   );
 
-  app.set('views', path.join(__dirname, './views'));
-  app.set('view engine', 'pug');
+  app.use('/api/is-logged-in', (_req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+  });
 
-  app.use(express.urlencoded({ extended: true }));
+  app.use(
+    cors({
+      origin:
+        nodeEnv === 'production' ? ['https://simple-login-app.craigstroman.com'] : [`http://localhost:8080`],
+      credentials: true,
+      methods: ['GET', 'POST', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    }),
+  );
+
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+
+  app.use('/api', authRouter);
 
   app.use(routes);
+
+  app.set('views', path.join(__dirname, './views'));
+  app.set('view engine', 'pug');
 
   app.locals.javascriptFile = javascriptFile;
 
