@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 export const isLoggedIn = async (req: Request, res: Response): Promise<void> => {
   if (req.session) {
     if (!req.session.userId) {
-      res.status(401).json({
+      res.status(200).json({
         isLoggedIn: false,
         message: 'User is not logged in',
       });
