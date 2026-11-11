@@ -21,6 +21,6 @@ router.route('/forgot-password').post(postForgotPassword);
 
 router.route('/change-password').post(changePassword);
 
-router.route('/is-logged-in').get(isLoggedIn);
+router.route('/api/is-logged-in').get(isLoggedIn);
 
 export default router;
