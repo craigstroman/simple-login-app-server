@@ -20,6 +20,7 @@
     "express-session": "1.17.1",
     "ioredis": "4.17.3",
     "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "pg": "^8.23.0",
     "pug": "^3.0.4",
     "typeorm": "0.2.25",
