@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import dotenv from 'dotenv';
+import { passport } from 'passport';
 import { redis, RedisStore } from './config/redis';
 import routes from './routes/index';
 import authRouter from './routes/auth';
@@ -73,6 +74,9 @@ const main = async () => {
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  app.use(passport.initialize());
+  app.use(passport.session);
 
   app.use('/api', authRouter);
 
