@@ -19,7 +19,6 @@
     "express": "4.17.1",
     "express-session": "1.17.1",
     "ioredis": "4.17.3",
-    "next-auth": "^4.24.15",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.23.0",
