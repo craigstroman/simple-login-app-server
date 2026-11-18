@@ -54,6 +54,7 @@ export const postRegister = async (req: Request, res: Response) => {
         username: username,
         email: email,
         password: hashedPassword,
+        login_type: 'Normal',
       })
       .returning('*')
       .execute();
