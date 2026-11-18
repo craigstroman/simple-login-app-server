@@ -5,11 +5,11 @@ import express from 'express';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import GoogleStrategy from 'passport-google-oauth20';
 import { redis, RedisStore } from './config/redis';
 import routes from './routes/index';
 import authRouter from './routes/auth';
 import { User } from './entities/USER';
+import { auth } from './config/auth';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
@@ -77,7 +77,9 @@ const main = async () => {
   app.use(express.urlencoded({ extended: true }));
 
   app.use(passport.initialize());
-  app.use(passport.session);
+  app.use(passport.session());
+
+  auth(passport);
 
   app.use('/api', authRouter);
 
