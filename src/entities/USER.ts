@@ -39,4 +39,8 @@ export class User extends BaseEntity {
 
   @Column()
   password!: string;
+
+  @Column(() => String)
+  @Column()
+  login_type!: string;
 }
