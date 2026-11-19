@@ -1,29 +1,13 @@
 import passport from 'passport';
-import { getRepository } from 'typeorm';
-import { google } from './Google';
-import { User as Users } from '../entities/USER';
+import { google } from './oauth/Google';
 
 export const auth = () => {
-  passport.serializeUser((user, done) => {
-    done(null, (user as Users).id);
+  passport.serializeUser(function (Users: User, done) {
+    done(null, Users);
   });
 
-  passport.deserializeUser(async (id: unknown, done) => {
-    try {
-      const userId = Number(id);
-
-      if (!Number.isSafeInteger(userId) || userId <= 0) {
-        return done(new Error('Invalid user ID'));
-      }
-
-      const user = await getRepository(Users).findOne({
-        where: { id: userId },
-      });
-
-      done(null, user || false);
-    } catch (error) {
-      done(error);
-    }
+  passport.deserializeUser(function (Users: User, done) {
+    done(null, Users);
   });
 
   // Register Google OAuth strategy
