@@ -43,4 +43,8 @@ export class User extends BaseEntity {
   @Column(() => String)
   @Column()
   login_type!: string;
+
+  @Column(() => String)
+  @Column()
+  oauth_id!: string;
 }
